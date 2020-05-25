@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package openpuz.coordinator.v1;
+
+option go_package = "coordinatorv1";
+option java_multiple_files = true;
+option java_outer_classname = "CoordinatorProto";
+option java_package = "com.openpuz.coordinator.v1";
+
+message CreateLobbyRequest {
+  GameType game_type = 1;
+}
+
+message CreateLobbyResponse {
+  Lobby lobby = 1;
+}
+
+message Lobby {
+  string name = 1;
+  GameType game_type = 2;
+
+  repeated LobbyPort ports = 3;
+  string address = 4;
+  string node_name = 5;
+}
+
+message LobbyPort {
+  string name = 1;
+  int32 port = 2;
+}
+
+enum GameType {
+  GAME_TYPE_INVALID = 0;
+  GAME_TYPE_SUDOKU = 1;
+}
+
+service CoordinatorAPI {
+  rpc CreateLobby(CreateLobbyRequest) returns (CreateLobbyResponse);
+}

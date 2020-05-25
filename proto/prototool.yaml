@@ -1,0 +1,18 @@
+protoc:
+  version: 3.11.0
+lint:
+  group: uber2
+generate:
+  go_options:
+    import_path: github.com/nhan-ng/openpuz
+  plugins:
+    - name: go
+      type: go
+      flags: plugins=grpc
+      output: /output/gen/go
+    - name: js
+      flags: import_style=commonjs,binary
+      output: /output/web/src/.generated
+    - name: grpc-web
+      flags: import_style=commonjs+dts,mode=grpcwebtext
+      output: /output/web/src/.generated

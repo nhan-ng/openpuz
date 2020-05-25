@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  envoy:
+    image: envoyproxy/envoy:v1.14.1
+    volumes:
+      - type: bind
+        source: ./envoy/envoy.yaml
+        target: /etc/envoy/envoy.yaml
+    command:
+      - /usr/local/bin/envoy
+      - -c
+      - /etc/envoy/envoy.yaml
+    ports:
+      - 9901:9901
+      - 8080:8080

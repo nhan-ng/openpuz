@@ -1,0 +1,1 @@
+docker run -v "$(pwd)/proto:/work" -v "$(pwd):/output" uber/prototool:1.10.0 prototool generate
