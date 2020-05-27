@@ -14,8 +14,8 @@ spec:
   ports:
     - port: 9090
       protocol: TCP
-      name: https
-      targetPort: fleet-coordinator # retrieve port from deployment config
+      name: http
+      targetPort: http # retrieve port from deployment config
 
 ---
 # Deploy a pod to run the fleet-coordinator code
@@ -46,7 +46,7 @@ spec:
           image: nhanng/openpuz-coordinator:[TAG]
           imagePullPolicy: Always
           ports:
-            - name: fleet-coordinator
+            - name: http
               containerPort: 9090
           # livenessProbe:
           #   httpGet:

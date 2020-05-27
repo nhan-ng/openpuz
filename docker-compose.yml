@@ -13,3 +13,11 @@ services:
     ports:
       - 9901:9901
       - 8080:8080
+  coordinator:
+    image: nhanng/openpuz-coordinator:v0.0.1
+    build:
+      context: .
+      dockerfile: coordinator.Dockerfile
+      target: final
+    ports:
+      - 9090:9090
