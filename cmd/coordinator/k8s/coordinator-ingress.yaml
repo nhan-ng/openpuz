@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: fleet-coordinator-ingress
+  labels:
+    app: fleet-coordinator
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.allow-http: "false"
+    #kubernetes.io/ingress.global-static-ip-name: "coordinator-static-ip"
+spec:
+  # tls:
+  #   - secretName: coordinatorsecret
+  backend:
+    serviceName: fleet-coordinator-backend
+    servicePort: 8000

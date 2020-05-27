@@ -1,0 +1,60 @@
+# Define a Service for the fleet-coordinator
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleet-coordinator-backend
+  annotations:
+    # service.alpha.kubernetes.io/app-protocols: '{"https":"HTTPS"}'
+  labels:
+    app: fleet-coordinator
+spec:
+  type: NodePort
+  selector:
+    app: fleet-coordinator
+  ports:
+    - port: 9090
+      protocol: TCP
+      name: https
+      targetPort: fleet-coordinator # retrieve port from deployment config
+
+---
+# Deploy a pod to run the fleet-coordinator code
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fleet-coordinator
+  namespace: default
+  labels:
+    app: fleet-coordinator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fleet-coordinator
+  template:
+    metadata:
+      labels:
+        app: fleet-coordinator
+    spec:
+      serviceAccount: fleet-coordinator
+      # volumes:
+      #   - name: secret-volume
+      #     secret:
+      #       secretName: coordinatorw3secret
+      containers:
+        - name: fleet-coordinator
+          image: nhanng/openpuz-coordinator:[TAG]
+          imagePullPolicy: Always
+          ports:
+            - name: fleet-coordinator
+              containerPort: 9090
+          # livenessProbe:
+          #   httpGet:
+          #     scheme: HTTPS
+          #     path: /healthz
+          #     port: 8000
+          #   initialDelaySeconds: 3
+          #   periodSeconds: 5
+          # volumeMounts:
+          #   - mountPath: /home/service/certs
+          #     name: secret-volume

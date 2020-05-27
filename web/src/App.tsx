@@ -5,8 +5,8 @@ import "./App.css";
 import {
   CreateLobbyRequest,
   GameType,
-} from "./.generated/coordinator/v1/service_pb";
-import { CoordinatorAPIPromiseClient } from "./.generated/coordinator/v1/service_grpc_web_pb";
+} from "./gen/coordinator/v1/service_pb";
+import { CoordinatorAPIPromiseClient } from "./gen/coordinator/v1/service_grpc_web_pb";
 
 const client = new CoordinatorAPIPromiseClient(
   "http://localhost:8080",
